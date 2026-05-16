@@ -2,7 +2,6 @@ import os
 import datetime
 import requests
 import telebot
-import browser_cookie3
 
 from telebot import types
 from yt_dlp import YoutubeDL
@@ -55,11 +54,7 @@ def get_base_ydl_opts():
 
         'noplaylist': True,
 
-        'extract_flat': False,
-
         'geo_bypass': True,
-
-        'geo_bypass_country': 'US',
 
         'socket_timeout': 30,
 
@@ -68,6 +63,8 @@ def get_base_ydl_opts():
         'fragment_retries': 10,
 
         'ignoreerrors': True,
+
+        'cookiefile': 'cookies.txt',
 
         'user_agent': (
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
@@ -81,19 +78,15 @@ def get_base_ydl_opts():
             'Referer': 'https://www.youtube.com/',
         },
 
-        # FIX BOT DETECT
         'extractor_args': {
             'youtube': {
                 'player_client': [
                     'android',
-                    'web',
-                    'ios'
+                    'ios',
+                    'web'
                 ]
             }
-        },
-
-        # AUTO LOAD COOKIES FROM CHROME
-        'cookiefile': None,
+        }
     }
 
 
@@ -107,7 +100,6 @@ def search_multiple_youtube(query, limit=5):
 
     ydl_opts['format'] = 'bestaudio/best'
     ydl_opts['default_search'] = f'ytsearch{limit}'
-    ydl_opts['cookiesfrombrowser'] = ('chrome',)
 
     results = []
 
@@ -148,7 +140,6 @@ def get_audio_download_link(video_url):
     ydl_opts = get_base_ydl_opts()
 
     ydl_opts['format'] = 'bestaudio[ext=m4a]/bestaudio/best'
-    ydl_opts['cookiesfrombrowser'] = ('chrome',)
 
     try:
 
