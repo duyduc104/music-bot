@@ -2,6 +2,7 @@ import os
 import datetime
 import requests
 import telebot
+import browser_cookie3
 
 from telebot import types
 from yt_dlp import YoutubeDL
@@ -45,24 +46,54 @@ bot.set_my_commands([
 def get_base_ydl_opts():
 
     return {
-        'quiet': True,
-        'nocheckcertificate': True,
-        'cookiefile': 'cookies.txt',
-        'user_agent': 'Mozilla/5.0',
 
+        'quiet': True,
+
+        'nocheckcertificate': True,
+
+        'format': 'bestaudio/best',
+
+        'noplaylist': True,
+
+        'extract_flat': False,
+
+        'geo_bypass': True,
+
+        'geo_bypass_country': 'US',
+
+        'socket_timeout': 30,
+
+        'retries': 10,
+
+        'fragment_retries': 10,
+
+        'ignoreerrors': True,
+
+        'user_agent': (
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+            'AppleWebKit/537.36 '
+            '(KHTML, like Gecko) '
+            'Chrome/124.0 Safari/537.36'
+        ),
+
+        'http_headers': {
+            'Accept-Language': 'vi-VN,vi;q=0.9',
+            'Referer': 'https://www.youtube.com/',
+        },
+
+        # FIX BOT DETECT
         'extractor_args': {
             'youtube': {
                 'player_client': [
                     'android',
-                    'ios',
-                    'web'
+                    'web',
+                    'ios'
                 ]
             }
         },
 
-        'http_headers': {
-            'Accept-Language': 'vi-VN,vi;q=0.9'
-        }
+        # AUTO LOAD COOKIES FROM CHROME
+        'cookiefile': None,
     }
 
 
@@ -76,6 +107,7 @@ def search_multiple_youtube(query, limit=5):
 
     ydl_opts['format'] = 'bestaudio/best'
     ydl_opts['default_search'] = f'ytsearch{limit}'
+    ydl_opts['cookiesfrombrowser'] = ('chrome',)
 
     results = []
 
@@ -116,6 +148,7 @@ def get_audio_download_link(video_url):
     ydl_opts = get_base_ydl_opts()
 
     ydl_opts['format'] = 'bestaudio[ext=m4a]/bestaudio/best'
+    ydl_opts['cookiesfrombrowser'] = ('chrome',)
 
     try:
 
