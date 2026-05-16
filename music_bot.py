@@ -45,38 +45,10 @@ bot.set_my_commands([
 def get_base_ydl_opts():
 
     return {
-
         'quiet': True,
-
         'nocheckcertificate': True,
-
-        'format': 'bestaudio/best',
-
-        'noplaylist': True,
-
-        'geo_bypass': True,
-
-        'socket_timeout': 30,
-
-        'retries': 10,
-
-        'fragment_retries': 10,
-
-        'ignoreerrors': True,
-
         'cookiefile': 'cookies.txt',
-
-        'user_agent': (
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-            'AppleWebKit/537.36 '
-            '(KHTML, like Gecko) '
-            'Chrome/124.0 Safari/537.36'
-        ),
-
-        'http_headers': {
-            'Accept-Language': 'vi-VN,vi;q=0.9',
-            'Referer': 'https://www.youtube.com/',
-        },
+        'user_agent': 'Mozilla/5.0',
 
         'extractor_args': {
             'youtube': {
@@ -86,6 +58,10 @@ def get_base_ydl_opts():
                     'web'
                 ]
             }
+        },
+
+        'http_headers': {
+            'Accept-Language': 'vi-VN,vi;q=0.9'
         }
     }
 
